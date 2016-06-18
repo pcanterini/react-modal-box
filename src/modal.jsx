@@ -1,8 +1,7 @@
 /**
  * Libraries
  */
-import React      from 'react';
-import classnames from 'classnames';
+import React from 'react';
 
 /**
  * Interfaces
@@ -10,17 +9,21 @@ import classnames from 'classnames';
 import Events from './events/events.js';
 
 /**
- * Constants
+ * Utilities
  */
-import KEYCODE from './utilities/keycode.const.js';
+import operator from './utilities/operator.js';
 
 /**
- * Mixins
+ * Modal Styles
  */
-import eventMixin from './mixins/event.mixin.jsx';
+import modalStyles from './styles/_modal.js';
 
 const Modal = React.createClass({
-  mixins: [eventMixin],
+  getDefaultProps() {
+    return {
+      customStyles: null
+    };
+  },
   getInitialState() {
     return {
       header: null,
@@ -29,11 +32,36 @@ const Modal = React.createClass({
       opened: false
     };
   },
+  componentWillMount() {
+    operator.ifTrueDo(this.props.customStyles, function () {
+      return  operator.objectEach(this.props.customStyles, function (prop, value) {
+        return (modalStyles[prop] = operator.extend(modalStyles[prop], value));
+      });
+    }, this);
+  },
   componentDidMount() {
     Events.on("modal.show", this.show);
+    Events.on("modal.hide", this.hide);
   },
   componentWillUnmount() {
     Events.off("modal.show", this.show);
+    Events.off("modal.hide", this.hide);
+  },
+  componentWillUpdate(nextProps, nextState) {
+    operator.ifTrueDo(nextState.opened, function () {
+      return modalStyles.modalBackdrop = operator.extend(modalStyles.modalBackdrop, {
+        display: "block",
+        visibility: "visible",
+        opacity: 1
+      });
+    }, this);
+    operator.ifFalseDo(nextState.opened, function () {
+      return modalStyles.modalBackdrop = operator.extend(modalStyles.modalBackdrop, {
+        display: "none",
+        visibility: "hidden",
+        opacity: 0
+      });
+    });
   },
   show(header, content, footer) {
     return this.setState({
@@ -43,34 +71,24 @@ const Modal = React.createClass({
       opened: true
     });
   },
-  dismiss() {
+  hide() {
     return this.setState({
       opened: false
     });
   },
+  ESCKeyHide(e) {
+    return (e.keyCode === key || e.charCode === key) && this.hide();
+  },
   render() {
-    const modalStyles    = classnames("modal");
-    const backdropStyles = classnames("modal-backdrop", {
-      opened: this.state.opened
-    });
     return (
-      <div className={backdropStyles}
-        tabIndex="1"
-        onClick={this.dismiss}
-        onKeyUp={this.onKeyExecute(KEYCODE.ESC, () => this.dismiss())}>
-        <div className={modalStyles} onClick={this.stopPropagation}>
-          <button type="button" className="modal-dismiss" onClick={this.dismiss}>
+      <div style={modalStyles.modalBackdrop} tabIndex="1" onClick={this.hide} onKeyUp={this.ESCKeyHide}>
+        <div style={modalStyles.modalContainer} onClick={(e) => e.stopPropagation()}>
+          <button style={modalStyles.modalDismiss} onClick={this.hide} type="button">
             <i className="icon-check" />
           </button>
-          <div className="modal-header">
-            {this.state.header}
-          </div>
-          <div className="modal-content">
-            {this.state.content}
-          </div>
-          <div className="modal-footer">
-            {this.state.footer}
-          </div>
+          <div style={modalStyles.modalHeader}>{this.state.header}</div>
+          <div style={modalStyles.modalContent}>{this.state.content}</div>
+          <div style={modalStyles.modalFooter}>{this.state.footer}</div>
         </div>
       </div>
     );

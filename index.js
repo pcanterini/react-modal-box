@@ -1,13 +1,38 @@
+var React    = require("react");
+var ReactDOM = require("react-dom");
+
+var ModalMixin = require("./src/mixins/modal.mixin.jsx").default;
+
+var Modal = require("./src/modal.jsx").default;
+
 var events = require("./src/events/events").default;
 
-var fn = function (string) {
-  console.log(`Hello ${string}`);
-};
+var App = React.createClass({
+  mixins:[ModalMixin],
+  show() {
+    return this.modalShow(
+      <h1>Hey</h1>,
+      <p>Title</p>,
+      <button>Hello</button>
+    );
+  },
+  hide() {
+    return this.modalHide();
+  },
+  render() {
+    return (
+      <div>
+        React Modal Box
+        <button onClick={this.show}>Open Modal</button>
+        <button onClick={this.hide}>Hide Modal</button>
+        <Modal customStyles={{
+          modalBackdrop: {
 
-events.on("test", fn);
+          }
+        }} />
+      </div>
+    );
+  }
+});
 
-events.emit("test", "World!");
-
-events.off("test", fn);
-
-events.emit("test", "World! 2");
+ReactDOM.render(<App />, document.getElementById("app"));

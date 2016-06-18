@@ -52,39 +52,3 @@
   outline: none;
   padding: 0;
 }
-
-.modal-title {
-  font-family: $lato;
-  font-weight: bold;
-  font-size: rem(26px);
-  color: $color-tertiary;
-  margin-bottom: 20px;
-}
-
-.modal-text {
-  display: inline-block;
-  font-family: $lato;
-  font-size: rem(16px);
-  font-weight: normal;
-  color: $gray-dark;
-}
-
-.modal-link {
-  display: inline-block;
-  font-family: $lato;
-  font-weight: bold;
-  font-size: inherit;
-  color: $color-primary;
-}
-
-.modal-header {
-  margin: 20px 0;
-}
-
-.modal-content {
-  margin: 20px 0;
-}
-
-.modal-footer {
-  margin: 20px 0;
-}
