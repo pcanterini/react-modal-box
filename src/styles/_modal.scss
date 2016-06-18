@@ -1,0 +1,90 @@
+//------------------------------
+// *****************************
+// Modal
+// *****************************
+//------------------------------
+
+.modal {
+  width: 560px;
+  background: $white;
+  box-shadow: $base-box-shadow;
+  border-radius: 5px;
+  padding: 0 50px;
+
+  @include center-both;
+}
+
+.modal-backdrop {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(66, 81, 90, 0.5);
+  overflow: hidden;
+  z-index: 1000;
+
+  @include transition(0.2s);
+
+  &.opened {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.modal-dismiss {
+  display: inline-block;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  width: 30px;
+  height: 30px;
+  font-size: rem(30px);
+  line-height: 30px;
+  outline: none;
+  padding: 0;
+}
+
+.modal-title {
+  font-family: $lato;
+  font-weight: bold;
+  font-size: rem(26px);
+  color: $color-tertiary;
+  margin-bottom: 20px;
+}
+
+.modal-text {
+  display: inline-block;
+  font-family: $lato;
+  font-size: rem(16px);
+  font-weight: normal;
+  color: $gray-dark;
+}
+
+.modal-link {
+  display: inline-block;
+  font-family: $lato;
+  font-weight: bold;
+  font-size: inherit;
+  color: $color-primary;
+}
+
+.modal-header {
+  margin: 20px 0;
+}
+
+.modal-content {
+  margin: 20px 0;
+}
+
+.modal-footer {
+  margin: 20px 0;
+}
