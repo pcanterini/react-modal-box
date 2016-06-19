@@ -13,6 +13,10 @@ is being called or being hidden.
 API
 ---
 
+__Example__
+
+[Live example](https://pcanterini.github.io/react-modal-box)
+
 __Installing__
 ```
 npm install react-modal-box --save
@@ -48,7 +52,7 @@ __Custom Styles__
     },
     modalIcon: {
       // Default Icon styles, element inside the modal Dismiss
-    }, 
+    },
     modalHeader: {
       // Header Styles
     },
