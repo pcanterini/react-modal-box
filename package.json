@@ -1,6 +1,6 @@
 {
   "name": "react-modal-box",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Modal Box Component",
   "main": "dist/index.js",
   "directories": {
@@ -26,18 +26,18 @@
     "component"
   ],
   "author": {
-    "name" : "Sadi Qevani",
-    "email" : "inaveq@gmail.com",
-    "url" : "http://www.sadiqevani.com"
+    "name": "Sadi Qevani",
+    "email": "inaveq@gmail.com",
+    "url": "http://www.sadiqevani.com"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/sadiqevani/react-modal-box.git"
+    "type": "git",
+    "url": "https://github.com/sadiqevani/react-modal-box.git"
   },
   "license": "MIT",
   "bugs": {
-    "url" : "https://github.com/sadiqevani/react-modal-box/issues",
-    "email" : "inaveq@gmail.com"
+    "url": "https://github.com/sadiqevani/react-modal-box/issues",
+    "email": "inaveq@gmail.com"
   },
   "devDependencies": {
     "babel-core": "^6.9.1",
