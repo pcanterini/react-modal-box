@@ -4,10 +4,10 @@
 import React      from 'react';
 import ReactDOM   from 'react-dom';
 
-import { Modal, ModalMixin, EventsMixin } from '../../src/index.js';
+import { Modal, ModalMixin, ModalEventsMixin } from '../../src/index.js';
 
 var App = React.createClass({
-  mixins:[ModalMixin, EventsMixin],
+  mixins:[ModalMixin, ModalEventsMixin],
   show() {
     return this.modalShow(
       <h1>Title</h1>,
