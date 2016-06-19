@@ -99,11 +99,6 @@
 	        { onClick: this.show },
 	        'Open Modal'
 	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: this.hide },
-	        'Hide Modal'
-	      ),
 	      _react2.default.createElement(_index.Modal, { customStyles: {
 	          modalBackdrop: {
 	            background: "rgba(0, 0, 0, 0.8)"
