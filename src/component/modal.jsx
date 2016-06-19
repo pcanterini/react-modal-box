@@ -1,27 +1,16 @@
 /**
- * Libraries
+ * React Modal Box
  */
-import React from 'react';
-
-/**
- * Interfaces
- */
-import Events from './events/events.js';
-
-/**
- * Utilities
- */
-import operator from './utilities/operator.js';
-
-/**
- * Modal Styles
- */
-import modalStyles from './styles/_modal.js';
+import React       from 'react';
+import Events      from '../events/events.js';
+import operator    from '../utilities/operator.js';
+import modalStyles from '../styles/_modal.js';
 
 const Modal = React.createClass({
   getDefaultProps() {
     return {
-      customStyles: null
+      customStyles: null,
+      customIcon: null
     };
   },
   getInitialState() {
@@ -33,7 +22,7 @@ const Modal = React.createClass({
     };
   },
   componentWillMount() {
-    operator.ifTrueDo(this.props.customStyles, function () {
+    return operator.ifTrueDo(operator.bool(this.props.customStyles), function () {
       return  operator.objectEach(this.props.customStyles, function (prop, value) {
         return (modalStyles[prop] = operator.extend(modalStyles[prop], value));
       });
@@ -48,20 +37,19 @@ const Modal = React.createClass({
     Events.off("modal.hide", this.hide);
   },
   componentWillUpdate(nextProps, nextState) {
-    operator.ifTrueDo(nextState.opened, function () {
+    return operator.ifTrueDoElse(nextState.opened, function () {
       return modalStyles.modalBackdrop = operator.extend(modalStyles.modalBackdrop, {
         display: "block",
         visibility: "visible",
         opacity: 1
       });
-    }, this);
-    operator.ifFalseDo(nextState.opened, function () {
+    }, function () {
       return modalStyles.modalBackdrop = operator.extend(modalStyles.modalBackdrop, {
         display: "none",
         visibility: "hidden",
         opacity: 0
       });
-    });
+    }, this);
   },
   show(header, content, footer) {
     return this.setState({
@@ -77,14 +65,18 @@ const Modal = React.createClass({
     });
   },
   ESCKeyHide(e) {
-    return (e.keyCode === key || e.charCode === key) && this.hide();
+    return (e.keyCode === 27 || e.charCode === 27) && this.hide();
   },
   render() {
     return (
       <div style={modalStyles.modalBackdrop} tabIndex="1" onClick={this.hide} onKeyUp={this.ESCKeyHide}>
         <div style={modalStyles.modalContainer} onClick={(e) => e.stopPropagation()}>
           <button style={modalStyles.modalDismiss} onClick={this.hide} type="button">
-            <i className="icon-check" />
+            {operator.ifTrueDoElse(operator.bool(this.props.customIcon), function () {
+              return this.props.customIcon;
+            }, function () {
+              return <i style={modalStyles.modalIcon}>X</i>;
+            }, this)}
           </button>
           <div style={modalStyles.modalHeader}>{this.state.header}</div>
           <div style={modalStyles.modalContent}>{this.state.content}</div>

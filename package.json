@@ -2,12 +2,16 @@
   "name": "react-modal-box",
   "version": "1.0.0",
   "description": "React Modal Box Component",
-  "main": "libs/index.js",
+  "main": "dist/index.js",
   "directories": {
+    "src": "src",
+    "dist": "dist",
     "example": "examples"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --config ./webpack.development.js --watch",
+    "build": "webpack --config ./webpack.production.js"
   },
   "keywords": [
     "react-component",

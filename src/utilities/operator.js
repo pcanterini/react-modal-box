@@ -32,6 +32,12 @@ export default {
   ifFalseDo(value, fn, context = null) {
     return value || fn.call(context, value);
   },
+  ifTrueDoElse(value, fn, def, context = null) {
+    return (value && fn.call(context, value)) || def.call(context, value);
+  },
+  ifFalseDoElse(value, fn, def, context = null) {
+    return (value || fn.call(context,  value)) && def.call(context, value);
+  },
   isArray(arr) {
     return Object.prototype.toString.call(arr) === '[object Array]';
   },

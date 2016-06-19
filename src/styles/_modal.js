@@ -15,7 +15,12 @@ export default {
     zIndex: 1000
   },
   modalContainer: {
-    position: "relative",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    WebkitTransform: "translate(-50%, -50%)",
+    MsTransform: "translate(-50%, -50%)",
     width: "560px",
     background: "#ffffff",
     padding: "0 50px",
@@ -34,6 +39,14 @@ export default {
     lineHeight: "30px",
     outline: "none",
     padding: 0
+  },
+  modalIcon: {
+    color: "#DDDDDD",
+    cursor: "pointer",
+    fontStyle: "normal",
+    fontSize: "16px",
+    fontWeight: "bold",
+    verticalAlign: "middle"
   },
   modalHeader: {
     margin: "20px 0"

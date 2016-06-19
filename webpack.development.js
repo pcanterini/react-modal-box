@@ -1,8 +1,13 @@
+/**
+ * React Modal Box
+ */
+var path = require("path");
+
 module.exports = {
-  entry: "./index.js",
+  entry: "./examples/scripts/index.js",
   output: {
-    path: __dirname,
-    filename: "./examples/example.js"
+    path: path.join(__dirname, "./examples/"),
+    filename: "modal.js"
   },
   module: {
     loaders: [
