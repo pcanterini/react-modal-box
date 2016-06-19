@@ -3,10 +3,12 @@
  */
 import React       from 'react';
 import Events      from '../events/events.js';
+import ModalMixin  from '../mixins/modal.mixin.jsx';
 import operator    from '../utilities/operator.js';
 import modalStyles from '../styles/_modal.js';
 
 const Modal = React.createClass({
+  mixins: [ModalMixin],
   getDefaultProps() {
     return {
       customStyles: null,
@@ -59,8 +61,11 @@ const Modal = React.createClass({
       opened: true
     });
   },
-  hide() {
+  hide(header, content, footer) {
     return this.setState({
+      header,
+      content,
+      footer,
       opened: false
     });
   },
@@ -69,9 +74,9 @@ const Modal = React.createClass({
   },
   render() {
     return (
-      <div style={modalStyles.modalBackdrop} tabIndex="1" onClick={this.hide} onKeyUp={this.ESCKeyHide}>
+      <div style={modalStyles.modalBackdrop} tabIndex="1" onClick={this.modalHide} onKeyUp={this.ESCKeyHide}>
         <div style={modalStyles.modalContainer} onClick={(e) => e.stopPropagation()}>
-          <button style={modalStyles.modalDismiss} onClick={this.hide} type="button">
+          <button style={modalStyles.modalDismiss} onClick={this.modalHide} type="button">
             {operator.ifTrueDoElse(operator.bool(this.props.customIcon), function () {
               return this.props.customIcon;
             }, function () {

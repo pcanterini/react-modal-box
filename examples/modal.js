@@ -20445,6 +20445,10 @@
 
 	var _events2 = _interopRequireDefault(_events);
 
+	var _modalMixin = __webpack_require__(173);
+
+	var _modalMixin2 = _interopRequireDefault(_modalMixin);
+
 	var _operator = __webpack_require__(171);
 
 	var _operator2 = _interopRequireDefault(_operator);
@@ -20455,13 +20459,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/**
-	 * React Modal Box
-	 */
-
-
 	var Modal = _react2.default.createClass({
 	  displayName: 'Modal',
+
+	  mixins: [_modalMixin2.default],
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      customStyles: null,
@@ -20514,8 +20515,11 @@
 	      opened: true
 	    });
 	  },
-	  hide: function hide() {
+	  hide: function hide(header, content, footer) {
 	    return this.setState({
+	      header: header,
+	      content: content,
+	      footer: footer,
 	      opened: false
 	    });
 	  },
@@ -20525,7 +20529,7 @@
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { style: _modal2.default.modalBackdrop, tabIndex: '1', onClick: this.hide, onKeyUp: this.ESCKeyHide },
+	      { style: _modal2.default.modalBackdrop, tabIndex: '1', onClick: this.modalHide, onKeyUp: this.ESCKeyHide },
 	      _react2.default.createElement(
 	        'div',
 	        { style: _modal2.default.modalContainer, onClick: function onClick(e) {
@@ -20533,7 +20537,7 @@
 	          } },
 	        _react2.default.createElement(
 	          'button',
-	          { style: _modal2.default.modalDismiss, onClick: this.hide, type: 'button' },
+	          { style: _modal2.default.modalDismiss, onClick: this.modalHide, type: 'button' },
 	          _operator2.default.ifTrueDoElse(_operator2.default.bool(this.props.customIcon), function () {
 	            return this.props.customIcon;
 	          }, function () {
@@ -20562,7 +20566,10 @@
 	      )
 	    );
 	  }
-	});
+	}); /**
+	     * React Modal Box
+	     */
+
 
 	exports.default = Modal;
 
