@@ -61,7 +61,7 @@
 	var App = _react2.default.createClass({
 	  displayName: 'App',
 
-	  mixins: [_index.ModalMixin, _index.EventsMixin],
+	  mixins: [_index.ModalMixin, _index.ModalEventsMixin],
 	  show: function show() {
 	    return this.modalShow(_react2.default.createElement(
 	      'h1',
@@ -20425,7 +20425,7 @@
 	});
 	var Modal = exports.Modal = __webpack_require__(169).default;
 	var ModalMixin = exports.ModalMixin = __webpack_require__(173).default;
-	var EventsMixin = exports.EventsMixin = __webpack_require__(174).default;
+	var ModalEventsMixin = exports.ModalEventsMixin = __webpack_require__(174).default;
 
 /***/ },
 /* 169 */

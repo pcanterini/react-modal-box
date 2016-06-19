@@ -60,7 +60,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	var Modal = exports.Modal = __webpack_require__(1).default;
-	var ModalMixin = exports.ModalMixin = __webpack_require__(6).default;
+	var ModalMixin = exports.ModalMixin = __webpack_require__(5).default;
 	var EventsMixin = exports.EventsMixin = __webpack_require__(7).default;
 
 /***/ },
@@ -81,23 +81,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _events2 = _interopRequireDefault(_events);
 
+	var _modalMixin = __webpack_require__(5);
+
+	var _modalMixin2 = _interopRequireDefault(_modalMixin);
+
 	var _operator = __webpack_require__(4);
 
 	var _operator2 = _interopRequireDefault(_operator);
 
-	var _modal = __webpack_require__(5);
+	var _modal = __webpack_require__(6);
 
 	var _modal2 = _interopRequireDefault(_modal);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/**
-	 * React Modal Box
-	 */
-
-
 	var Modal = _react2.default.createClass({
 	  displayName: 'Modal',
+
+	  mixins: [_modalMixin2.default],
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      customStyles: null,
@@ -150,8 +151,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      opened: true
 	    });
 	  },
-	  hide: function hide() {
+	  hide: function hide(header, content, footer) {
 	    return this.setState({
+	      header: header,
+	      content: content,
+	      footer: footer,
 	      opened: false
 	    });
 	  },
@@ -161,7 +165,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { style: _modal2.default.modalBackdrop, tabIndex: '1', onClick: this.hide, onKeyUp: this.ESCKeyHide },
+	      { style: _modal2.default.modalBackdrop, tabIndex: '1', onClick: this.modalHide, onKeyUp: this.ESCKeyHide },
 	      _react2.default.createElement(
 	        'div',
 	        { style: _modal2.default.modalContainer, onClick: function onClick(e) {
@@ -169,7 +173,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          } },
 	        _react2.default.createElement(
 	          'button',
-	          { style: _modal2.default.modalDismiss, onClick: this.hide, type: 'button' },
+	          { style: _modal2.default.modalDismiss, onClick: this.modalHide, type: 'button' },
 	          _operator2.default.ifTrueDoElse(_operator2.default.bool(this.props.customIcon), function () {
 	            return this.props.customIcon;
 	          }, function () {
@@ -198,7 +202,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      )
 	    );
 	  }
-	});
+	}); /**
+	     * React Modal Box
+	     */
+
 
 	exports.default = Modal;
 
@@ -362,6 +369,33 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _events = __webpack_require__(3);
+
+	var _events2 = _interopRequireDefault(_events);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	  modalShow: function modalShow(header, content, footer) {
+	    return _events2.default.emit("modal.show", header, content, footer);
+	  },
+	  modalHide: function modalHide() {
+	    return _events2.default.emit("modal.hide", null, null, null);
+	  }
+	}; /**
+	    * Interfaces
+	    */
+
+/***/ },
+/* 6 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -429,33 +463,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    margin: "20px 0"
 	  }
 	};
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _events = __webpack_require__(3);
-
-	var _events2 = _interopRequireDefault(_events);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = {
-	  modalShow: function modalShow(header, content, footer) {
-	    return _events2.default.emit("modal.show", header, content, footer);
-	  },
-	  modalHide: function modalHide() {
-	    return _events2.default.emit("modal.hide", null, null, null);
-	  }
-	}; /**
-	    * Interfaces
-	    */
 
 /***/ },
 /* 7 */
