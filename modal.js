@@ -44,62 +44,82 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
-	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(38);
+	var _react = __webpack_require__(1);
 
-	var ModalMixin = __webpack_require__(168).default;
+	var _react2 = _interopRequireDefault(_react);
 
-	var Modal = __webpack_require__(171).default;
+	var _reactDom = __webpack_require__(38);
 
-	var events = __webpack_require__(169).default;
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var App = React.createClass({
-	  displayName: "App",
+	var _index = __webpack_require__(168);
 
-	  mixins: [ModalMixin],
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var App = _react2.default.createClass({
+	  displayName: 'App',
+
+	  mixins: [_index.ModalMixin, _index.EventsMixin],
 	  show: function show() {
-	    return this.modalShow(React.createElement(
-	      "h1",
+	    return this.modalShow(_react2.default.createElement(
+	      'h1',
 	      null,
-	      "Hey"
-	    ), React.createElement(
-	      "p",
+	      'Title'
+	    ), _react2.default.createElement(
+	      'p',
 	      null,
-	      "Title"
-	    ), React.createElement(
-	      "button",
-	      null,
-	      "Hello"
+	      'Content'
+	    ), _react2.default.createElement(
+	      'button',
+	      { onClick: this.hide },
+	      'Close Button'
 	    ));
 	  },
 	  hide: function hide() {
 	    return this.modalHide();
 	  },
 	  render: function render() {
-	    return React.createElement(
-	      "div",
+
+	    this.onModalShow(function () {
+	      console.log("Modal Shown!");
+	    });
+
+	    this.onModalHide(function () {
+	      console.log("Modal Hidden!");
+	    });
+
+	    return _react2.default.createElement(
+	      'div',
 	      null,
-	      "React Modal Box",
-	      React.createElement(
-	        "button",
+	      'React Modal Box',
+	      _react2.default.createElement(
+	        'button',
 	        { onClick: this.show },
-	        "Open Modal"
+	        'Open Modal'
 	      ),
-	      React.createElement(
-	        "button",
+	      _react2.default.createElement(
+	        'button',
 	        { onClick: this.hide },
-	        "Hide Modal"
+	        'Hide Modal'
 	      ),
-	      React.createElement(Modal, { customStyles: {
-	          modalBackdrop: {}
+	      _react2.default.createElement(_index.Modal, { customStyles: {
+	          modalBackdrop: {
+	            background: "rgba(0, 0, 0, 0.8"
+	          },
+	          modalContainer: {
+	            boxShadow: "0 0 1px 1px rgba(0, 0, 0, 0.9)"
+	          }
 	        } })
 	    );
 	  }
-	});
+	}); /**
+	     * Example Code!
+	     */
 
-	ReactDOM.render(React.createElement(App, null), document.getElementById("app"));
+
+	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app"));
 
 /***/ },
 /* 1 */
@@ -20403,26 +20423,151 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-
-	var _events = __webpack_require__(169);
-
-	var _events2 = _interopRequireDefault(_events);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = {
-	  modalShow: function modalShow(header, content, footer) {
-	    return _events2.default.emit("modal.show", header, content, footer);
-	  },
-	  modalHide: function modalHide() {
-	    return _events2.default.emit("modal.hide", null, null, null);
-	  }
-	}; /**
-	    * Interfaces
-	    */
+	var Modal = exports.Modal = __webpack_require__(169).default;
+	var ModalMixin = exports.ModalMixin = __webpack_require__(173).default;
+	var EventsMixin = exports.EventsMixin = __webpack_require__(174).default;
 
 /***/ },
 /* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _events = __webpack_require__(170);
+
+	var _events2 = _interopRequireDefault(_events);
+
+	var _operator = __webpack_require__(171);
+
+	var _operator2 = _interopRequireDefault(_operator);
+
+	var _modal = __webpack_require__(172);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * React Modal Box
+	 */
+
+
+	var Modal = _react2.default.createClass({
+	  displayName: 'Modal',
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      customStyles: null,
+	      customIcon: null
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      header: null,
+	      content: null,
+	      footer: null,
+	      opened: false
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    return _operator2.default.ifTrueDo(_operator2.default.bool(this.props.customStyles), function () {
+	      return _operator2.default.objectEach(this.props.customStyles, function (prop, value) {
+	        return _modal2.default[prop] = _operator2.default.extend(_modal2.default[prop], value);
+	      });
+	    }, this);
+	  },
+	  componentDidMount: function componentDidMount() {
+	    _events2.default.on("modal.show", this.show);
+	    _events2.default.on("modal.hide", this.hide);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    _events2.default.off("modal.show", this.show);
+	    _events2.default.off("modal.hide", this.hide);
+	  },
+	  componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
+	    return _operator2.default.ifTrueDoElse(nextState.opened, function () {
+	      return _modal2.default.modalBackdrop = _operator2.default.extend(_modal2.default.modalBackdrop, {
+	        display: "block",
+	        visibility: "visible",
+	        opacity: 1
+	      });
+	    }, function () {
+	      return _modal2.default.modalBackdrop = _operator2.default.extend(_modal2.default.modalBackdrop, {
+	        display: "none",
+	        visibility: "hidden",
+	        opacity: 0
+	      });
+	    }, this);
+	  },
+	  show: function show(header, content, footer) {
+	    return this.setState({
+	      header: header,
+	      content: content,
+	      footer: footer,
+	      opened: true
+	    });
+	  },
+	  hide: function hide() {
+	    return this.setState({
+	      opened: false
+	    });
+	  },
+	  ESCKeyHide: function ESCKeyHide(e) {
+	    return (e.keyCode === 27 || e.charCode === 27) && this.hide();
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { style: _modal2.default.modalBackdrop, tabIndex: '1', onClick: this.hide, onKeyUp: this.ESCKeyHide },
+	      _react2.default.createElement(
+	        'div',
+	        { style: _modal2.default.modalContainer, onClick: function onClick(e) {
+	            return e.stopPropagation();
+	          } },
+	        _react2.default.createElement(
+	          'button',
+	          { style: _modal2.default.modalDismiss, onClick: this.hide, type: 'button' },
+	          _operator2.default.ifTrueDoElse(_operator2.default.bool(this.props.customIcon), function () {
+	            return this.props.customIcon;
+	          }, function () {
+	            return _react2.default.createElement(
+	              'i',
+	              { style: _modal2.default.modalIcon },
+	              'X'
+	            );
+	          }, this)
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { style: _modal2.default.modalHeader },
+	          this.state.header
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { style: _modal2.default.modalContent },
+	          this.state.content
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { style: _modal2.default.modalFooter },
+	          this.state.footer
+	        )
+	      )
+	    );
+	  }
+	});
+
+	exports.default = Modal;
+
+/***/ },
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -20431,7 +20576,7 @@
 	  value: true
 	});
 
-	var _operator = __webpack_require__(170);
+	var _operator = __webpack_require__(171);
 
 	var _operator2 = _interopRequireDefault(_operator);
 
@@ -20468,7 +20613,7 @@
 	    */
 
 /***/ },
-/* 170 */
+/* 171 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20530,6 +20675,16 @@
 
 	    return value || fn.call(context, value);
 	  },
+	  ifTrueDoElse: function ifTrueDoElse(value, fn, def) {
+	    var context = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+
+	    return value && fn.call(context, value) || def.call(context, value);
+	  },
+	  ifFalseDoElse: function ifFalseDoElse(value, fn, def) {
+	    var context = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+
+	    return (value || fn.call(context, value)) && def.call(context, value);
+	  },
 	  isArray: function isArray(arr) {
 	    return Object.prototype.toString.call(arr) === '[object Array]';
 	  },
@@ -20564,150 +20719,6 @@
 	};
 
 /***/ },
-/* 171 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _events = __webpack_require__(169);
-
-	var _events2 = _interopRequireDefault(_events);
-
-	var _operator = __webpack_require__(170);
-
-	var _operator2 = _interopRequireDefault(_operator);
-
-	var _modal = __webpack_require__(172);
-
-	var _modal2 = _interopRequireDefault(_modal);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Utilities
-	 */
-	/**
-	 * Libraries
-	 */
-
-
-	var Modal = _react2.default.createClass({
-	  displayName: 'Modal',
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      customStyles: null
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    return {
-	      header: null,
-	      content: null,
-	      footer: null,
-	      opened: false
-	    };
-	  },
-	  componentWillMount: function componentWillMount() {
-	    _operator2.default.ifTrueDo(this.props.customStyles, function () {
-	      return _operator2.default.objectEach(this.props.customStyles, function (prop, value) {
-	        return _modal2.default[prop] = _operator2.default.extend(_modal2.default[prop], value);
-	      });
-	    }, this);
-	  },
-	  componentDidMount: function componentDidMount() {
-	    _events2.default.on("modal.show", this.show);
-	    _events2.default.on("modal.hide", this.hide);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    _events2.default.off("modal.show", this.show);
-	    _events2.default.off("modal.hide", this.hide);
-	  },
-	  componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
-	    _operator2.default.ifTrueDo(nextState.opened, function () {
-	      return _modal2.default.modalBackdrop = _operator2.default.extend(_modal2.default.modalBackdrop, {
-	        display: "block",
-	        visibility: "visible",
-	        opacity: 1
-	      });
-	    }, this);
-	    _operator2.default.ifFalseDo(nextState.opened, function () {
-	      return _modal2.default.modalBackdrop = _operator2.default.extend(_modal2.default.modalBackdrop, {
-	        display: "none",
-	        visibility: "hidden",
-	        opacity: 0
-	      });
-	    });
-	  },
-	  show: function show(header, content, footer) {
-	    return this.setState({
-	      header: header,
-	      content: content,
-	      footer: footer,
-	      opened: true
-	    });
-	  },
-	  hide: function hide() {
-	    return this.setState({
-	      opened: false
-	    });
-	  },
-	  ESCKeyHide: function ESCKeyHide(e) {
-	    return (e.keyCode === key || e.charCode === key) && this.hide();
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { style: _modal2.default.modalBackdrop, tabIndex: '1', onClick: this.hide, onKeyUp: this.ESCKeyHide },
-	      _react2.default.createElement(
-	        'div',
-	        { style: _modal2.default.modalContainer, onClick: function onClick(e) {
-	            return e.stopPropagation();
-	          } },
-	        _react2.default.createElement(
-	          'button',
-	          { style: _modal2.default.modalDismiss, onClick: this.hide, type: 'button' },
-	          _react2.default.createElement('i', { className: 'icon-check' })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { style: _modal2.default.modalHeader },
-	          this.state.header
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { style: _modal2.default.modalContent },
-	          this.state.content
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { style: _modal2.default.modalFooter },
-	          this.state.footer
-	        )
-	      )
-	    );
-	  }
-	});
-
-	/**
-	 * Modal Styles
-	 */
-
-
-	/**
-	 * Interfaces
-	 */
-
-
-	exports.default = Modal;
-
-/***/ },
 /* 172 */
 /***/ function(module, exports) {
 
@@ -20733,7 +20744,12 @@
 	    zIndex: 1000
 	  },
 	  modalContainer: {
-	    position: "relative",
+	    position: "absolute",
+	    top: "50%",
+	    left: "50%",
+	    transform: "translate(-50%, -50%)",
+	    WebkitTransform: "translate(-50%, -50%)",
+	    MsTransform: "translate(-50%, -50%)",
 	    width: "560px",
 	    background: "#ffffff",
 	    padding: "0 50px",
@@ -20753,6 +20769,14 @@
 	    outline: "none",
 	    padding: 0
 	  },
+	  modalIcon: {
+	    color: "#DDDDDD",
+	    cursor: "pointer",
+	    fontStyle: "normal",
+	    fontSize: "16px",
+	    fontWeight: "bold",
+	    verticalAlign: "middle"
+	  },
 	  modalHeader: {
 	    margin: "20px 0"
 	  },
@@ -20763,6 +20787,60 @@
 	    margin: "20px 0"
 	  }
 	};
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _events = __webpack_require__(170);
+
+	var _events2 = _interopRequireDefault(_events);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	  modalShow: function modalShow(header, content, footer) {
+	    return _events2.default.emit("modal.show", header, content, footer);
+	  },
+	  modalHide: function modalHide() {
+	    return _events2.default.emit("modal.hide", null, null, null);
+	  }
+	}; /**
+	    * Interfaces
+	    */
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _events = __webpack_require__(170);
+
+	var _events2 = _interopRequireDefault(_events);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	  onModalShow: function onModalShow(callback) {
+	    return _events2.default.on("modal.show", callback);
+	  },
+	  onModalHide: function onModalHide(callback) {
+	    return _events2.default.on("modal.hide", callback);
+	  }
+	}; /**
+	    * Interfaces
+	    */
 
 /***/ }
 /******/ ]);
