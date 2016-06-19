@@ -64,28 +64,28 @@ __Custom Icon Style__
 __Invoking Mixins__
 
 ```
-    this.modalShow(
-          <h1>Title</h1>,
-          <p>Content</p>,
-          <button onClick={this.hide}>Close Button</button>
-        );
+this.modalShow(
+    <h1>Title</h1>,
+    <p>Content</p>,
+    <button onClick={this.hide}>Close Button</button>
+);
 ```
 
 ```
-    this.modalHide();
+this.modalHide();
 ```
 
 __Events Mixins__
 
 ```
-    this.onModalShow(function (header, content, footer) {
-      // The arguments passed into the function are the JSX
-      // you sent to the modal when you invoked it.
-      console.log("Modal Shown!");
-    });
+this.onModalShow(function (header, content, footer) {
+   // The arguments passed into the function are the JSX
+   // you sent to the modal when you invoked it.
+   console.log("Modal Shown!");
+});
 
-    this.onModalHide(function (header, content, footer) {
-      // These arguments return nothing other than null's
-      console.log("Modal Hidden!");
-    });
+this.onModalHide(function (header, content, footer) {
+   // These arguments return nothing other than null's
+   console.log("Modal Hidden!");
+});
 ```
