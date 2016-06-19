@@ -1,14 +1,15 @@
 /**
  * React Modal Box
  */
-var path = require("path");
+var path    = require("path");
+var webpack = require("webpack");
 
 module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.join(__dirname, "./dist/"),
     filename: "index.js",
-    library: ["ReactModalBox"],
+    library: ["react-modal-box"],
     libraryTarget: "umd",
     publicPath: "/dist/"
   },
@@ -25,5 +26,8 @@ module.exports = {
   externals: {
     'react': 'React',
     'react-dom': 'ReactDOM'
-  }
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({minimize: true})
+  ]
 };

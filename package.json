@@ -10,8 +10,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --config ./webpack.development.js --watch",
-    "build": "webpack --config ./webpack.production.js"
+    "prepublish": "webpack --config ./webpack.production.js",
+    "watch": "webpack --config ./webpack.development.js --watch"
   },
   "keywords": [
     "react-component",
