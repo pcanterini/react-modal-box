@@ -31,28 +31,28 @@ __Custom Styles__
 // Place here React Styles (camel Case)
 
 <Modal customStyles={{
-                 modalBackdrop: {
-                   // Backdrop styles
-                 },
-                 modalContainer: {
-                   // Modal container styles
-                 },
-                 modalDismiss: {
-                   // Dismiss Button Styles
-                 },
-                 modalIcon: {
-                   // Default Icon styles, element inside the modal Dismiss
-                 }, 
-                 modalHeader: {
-                   // Header Styles
-                 },
-                 modalContent: {
-                   // Content Styles
-                 },
-                 modalFooter: {
-                   // Footer Styles
-                 }
-               />
+    modalBackdrop: {
+      // Backdrop styles
+    },
+    modalContainer: {
+      // Modal container styles
+    },
+    modalDismiss: {
+      // Dismiss Button Styles
+    },
+    modalIcon: {
+      // Default Icon styles, element inside the modal Dismiss
+    }, 
+    modalHeader: {
+      // Header Styles
+    },
+    modalContent: {
+      // Content Styles
+    },
+    modalFooter: {
+      // Footer Styles
+    }
+/>
 ```
 
 __Custom Icon Style__
