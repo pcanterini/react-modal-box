@@ -25,8 +25,20 @@
     "dialog",
     "component"
   ],
-  "author": "Sadi Qevani",
+  "author": {
+    "name" : "Sadi Qevani",
+    "email" : "inaveq@gmail.com",
+    "url" : "http://www.sadiqevani.com"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/sadiqevani/react-modal-box.git"
+  },
   "license": "MIT",
+  "bugs": {
+    "url" : "https://github.com/sadiqevani/react-modal-box/issues",
+    "email" : "inaveq@gmail.com"
+  },
   "devDependencies": {
     "babel-core": "^6.9.1",
     "babel-loader": "^6.2.4",

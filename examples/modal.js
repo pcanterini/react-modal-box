@@ -81,18 +81,15 @@
 	    return this.modalHide();
 	  },
 	  render: function render() {
-
 	    this.onModalShow(function (header, content, footer) {
 	      // The arguments passed into the function are the JSX
 	      // you sent to the modal when you invoked it.
 	      console.log("Modal Shown!");
 	    });
-
 	    this.onModalHide(function (header, content, footer) {
 	      // These arguments return nothing other than null's
 	      console.log("Modal Hidden!");
 	    });
-
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -109,7 +106,7 @@
 	      ),
 	      _react2.default.createElement(_index.Modal, { customStyles: {
 	          modalBackdrop: {
-	            background: "rgba(0, 0, 0, 0.8"
+	            background: "rgba(0, 0, 0, 0.8)"
 	          },
 	          modalContainer: {
 	            boxShadow: "0 0 1px 1px rgba(0, 0, 0, 0.9)"
@@ -20427,7 +20424,7 @@
 	  value: true
 	});
 	var Modal = exports.Modal = __webpack_require__(169).default;
-	var ModalMixin = exports.ModalMixin = __webpack_require__(172).default;
+	var ModalMixin = exports.ModalMixin = __webpack_require__(173).default;
 	var ModalEventsMixin = exports.ModalEventsMixin = __webpack_require__(174).default;
 
 /***/ },
@@ -20448,7 +20445,7 @@
 
 	var _events2 = _interopRequireDefault(_events);
 
-	var _modalMixin = __webpack_require__(172);
+	var _modalMixin = __webpack_require__(173);
 
 	var _modalMixin2 = _interopRequireDefault(_modalMixin);
 
@@ -20456,7 +20453,7 @@
 
 	var _operator2 = _interopRequireDefault(_operator);
 
-	var _modal = __webpack_require__(173);
+	var _modal = __webpack_require__(172);
 
 	var _modal2 = _interopRequireDefault(_modal);
 
@@ -20730,33 +20727,6 @@
 
 /***/ },
 /* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _events = __webpack_require__(170);
-
-	var _events2 = _interopRequireDefault(_events);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = {
-	  modalShow: function modalShow(header, content, footer) {
-	    return _events2.default.emit("modal.show", header, content, footer);
-	  },
-	  modalHide: function modalHide() {
-	    return _events2.default.emit("modal.hide", null, null, null);
-	  }
-	}; /**
-	    * Interfaces
-	    */
-
-/***/ },
-/* 173 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -20824,6 +20794,33 @@
 	    margin: "20px 0"
 	  }
 	};
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _events = __webpack_require__(170);
+
+	var _events2 = _interopRequireDefault(_events);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	  modalShow: function modalShow(header, content, footer) {
+	    return _events2.default.emit("modal.show", header, content, footer);
+	  },
+	  modalHide: function modalHide() {
+	    return _events2.default.emit("modal.hide", null, null, null);
+	  }
+	}; /**
+	    * Interfaces
+	    */
 
 /***/ },
 /* 174 */
