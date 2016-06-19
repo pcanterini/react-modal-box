@@ -19,18 +19,15 @@ var App = React.createClass({
     return this.modalHide();
   },
   render() {
-
     this.onModalShow(function (header, content, footer) {
       // The arguments passed into the function are the JSX
       // you sent to the modal when you invoked it.
       console.log("Modal Shown!");
     });
-
     this.onModalHide(function (header, content, footer) {
       // These arguments return nothing other than null's
       console.log("Modal Hidden!");
     });
-
     return (
       <div>
         React Modal Box
@@ -38,7 +35,7 @@ var App = React.createClass({
         <button onClick={this.hide}>Hide Modal</button>
         <Modal customStyles={{
           modalBackdrop: {
-            background: "rgba(0, 0, 0, 0.8"
+            background: "rgba(0, 0, 0, 0.8)"
           },
           modalContainer: {
             boxShadow: "0 0 1px 1px rgba(0, 0, 0, 0.9)"
